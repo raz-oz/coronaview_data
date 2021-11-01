@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public interface IAccessService {
+public interface IDataService {
 
     List<Hospitalized> getHospitalized();
 

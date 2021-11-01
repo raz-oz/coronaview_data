@@ -19,8 +19,8 @@ import java.util.Map;
 
 
 @Service
-public class AccessService implements IAccessService {
-    private static final Logger log = LoggerFactory.getLogger(AccessService.class);
+public class DataService implements IDataService {
+    private static final Logger log = LoggerFactory.getLogger(DataService.class);
 
     /**--------------------Repository---------------------**/
     @Autowired
