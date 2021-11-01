@@ -16,12 +16,6 @@ public class RoutingController {
     @Autowired
     private IAccessService accessService;
 
-    //TODO
-//    @GetMapping("/recovered")
-//    public List<Recovered> get_AllRecovered(@PathVariable(value = "recovered_id") String userId) {
-//        return null;
-//    }
-
     @GetMapping("/recovered/{recovered_id}")
     public Recovered get_RecoveredByID(@PathVariable(value = "recovered_id") String _id) {
         return accessService.getRecoveredByID(Long.parseLong(_id));
