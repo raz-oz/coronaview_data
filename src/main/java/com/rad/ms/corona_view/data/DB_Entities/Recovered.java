@@ -1,4 +1,4 @@
-package com.rad.ms.corona_view.data;
+package com.rad.ms.corona_view.data.DB_Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,6 @@ import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Recovered {
-
     @Id
     private long _id;
     private String _days_between_pos_and_recovery;

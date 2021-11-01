@@ -1,4 +1,4 @@
-package com.rad.ms.corona_view.data;
+package com.rad.ms.corona_view.data.DB_Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -6,6 +6,7 @@ import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Hospitalized {
+
     private long _id;
     private String date;
     private String total_hospitalized;

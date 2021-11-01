@@ -1,11 +1,13 @@
-package com.rad.ms.corona_view.data;
+package com.rad.ms.corona_view.data.DB_Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.Id;
 
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Isolations {
+    @Id
     private long _id;
     private String date;
     private String isolated_today_contact_with_confirmed;

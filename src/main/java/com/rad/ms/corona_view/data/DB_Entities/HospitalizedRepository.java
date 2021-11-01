@@ -1,4 +1,4 @@
-package com.rad.ms.corona_view.data;
+package com.rad.ms.corona_view.data.DB_Entities;
 
 
 import org.springframework.data.mongodb.repository.MongoRepository;
