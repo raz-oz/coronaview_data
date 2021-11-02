@@ -1,12 +1,15 @@
 package com.rad.ms.corona_view.data.DB_Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Hospitalized {
-
+    @Id
     private long _id;
     private String date;
     private String total_hospitalized;
@@ -87,6 +90,7 @@ public class Hospitalized {
                 ", severe_condition_avg_age='" + severe_condition_Patients_counter + '\'' +
                 '}';
     }
+
 
     public long get_id() {
         return _id;
@@ -271,4 +275,5 @@ public class Hospitalized {
     public void setSevere_condition_Patients_counter(String severe_condition_Patients_counter) {
         this.severe_condition_Patients_counter = severe_condition_Patients_counter;
     }
+
 }
