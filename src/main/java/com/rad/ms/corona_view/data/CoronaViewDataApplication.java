@@ -8,6 +8,7 @@ import org.springframework.boot.context.event.*;
 import org.springframework.context.*;
 import org.springframework.core.env.*;
 
+
 @SpringBootApplication
 public class CoronaViewDataApplication implements ApplicationListener<ApplicationReadyEvent> {
 

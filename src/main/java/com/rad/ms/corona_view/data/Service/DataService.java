@@ -6,6 +6,7 @@ import com.rad.ms.corona_view.data.DB_Entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -26,10 +27,13 @@ public class DataService implements IDataService {
     /**--------------------Repository---------------------**/
     @Autowired
     private HospitalizedRepository hospitalizedRepository;
+
     @Autowired
     private RecoveredRepository recoveredRepository;
+
     @Autowired
     private CovidByAreaRepository covidByAreaRepository;
+
     @Autowired
     private IsolationRepository isolationRepository;
     /**---------------------------------------------------**/
@@ -39,24 +43,28 @@ public class DataService implements IDataService {
 		return builder.build();
 	}
 
+
     @Override
-    public List<Hospitalized> getHospitalized() {
-        return null;
+    public Hospitalized getHospitalized(String date) {
+        return hospitalizedRepository.findBydate(date);
+//        return null;
     }
 
     @Override
-    public List<Isolations> getIsolationsByDate() {
-        return null;
+    public Isolations getIsolationsByDate(String date) {
+        return isolationRepository.findBydate(date);
     }
 
     @Override
-    public List<CovidByArea> getCovidByArea() {
-        return null;
+    public List<CovidByArea> getCovidByArea_town_code(String town_code) {
+        return covidByAreaRepository.findByTownCode(town_code);
+//        return null;
+
     }
 
     @Override
-    public List<Recovered> getRecoveredByDate() {
-        return null;
+    public CovidByArea getCovidByArea_id(long id) {
+        return covidByAreaRepository.findBy_id(id);
     }
 
     @Override
@@ -64,10 +72,6 @@ public class DataService implements IDataService {
         return recoveredRepository.findBy_id(ID);
     }
 
-    @Override
-    public List<Recovered> getRecoveredByFirstName() {
-        return null;
-    }
 
     @Override
     public HttpStatus updateDbData() {
@@ -87,25 +91,64 @@ public class DataService implements IDataService {
 
     @Override
     public HttpStatus updateDbDataFromRecoveredDB() {
-        return null;
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpStatus recoveredDBStatus = extractInfoFromRecoveredDB(restTemplate);
+        }
+        catch(Exception e) {
+            log.info(e.toString());
+            return HttpStatus.NOT_FOUND;
+        }
+        return HttpStatus.OK;
     }
 
     @Override
     public HttpStatus updateDbDataFromIsolationsDB() {
-        return null;
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpStatus IsolationsDBStatus = extractInfoFromIsolationsDB(restTemplate);
+
+        }
+        catch(Exception e) {
+            log.info(e.toString());
+            return HttpStatus.NOT_FOUND;
+        }
+        return HttpStatus.OK;
     }
 
     @Override
     public HttpStatus updateDbDataFromCovidByAreaDB() {
-        return null;
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpStatus CovidByAreaDBStatus = extractInfoFromCovidByAreaDB(restTemplate);
+        }
+        catch(Exception e) {
+            log.info(e.toString());
+            return HttpStatus.NOT_FOUND;
+        }
+        return HttpStatus.OK;
     }
 
     @Override
     public HttpStatus updateDbDataFromHospitalizedDB() {
-        return null;
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpStatus HospitalizedDBStatus = extractInfoFromHospitalizedDB(restTemplate);
+        }
+        catch(Exception e) {
+            log.info(e.toString());
+            return HttpStatus.NOT_FOUND;
+        }
+        return HttpStatus.OK;
     }
 
-
+    /**
+     * ---------------extractInfoFromRecoveredDB---------------
+     * The function receives raw information from a GET requests,
+     * then she extracts the relevant information from it and stores it in the relevant DB.
+     * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
+     * @return Success status if everything went well and error + failure otherwise
+     */
     public HttpStatus extractInfoFromRecoveredDB(RestTemplate restTemplate) {
         try {
             log.info("---------- start RecoveredDB extraction----------");
@@ -127,6 +170,13 @@ public class DataService implements IDataService {
         return HttpStatus.OK;
     }
 
+    /**
+     * ---------------extractInfoFromIsolationsDB---------------
+     * The function receives raw information from a GET requests,
+     * then she extracts the relevant information from it and stores it in the relevant DB.
+     * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
+     * @return Success status if everything went well and error + failure otherwise
+     */
     public HttpStatus extractInfoFromIsolationsDB(RestTemplate restTemplate ) {
         try {
             log.info("---------- start IsolationsDB extraction----------");
@@ -149,6 +199,13 @@ public class DataService implements IDataService {
         return HttpStatus.OK;
     }
 
+    /**
+     * ---------------extractInfoFromCovidByAreaDB---------------
+     * The function receives raw information from a GET requests,
+     * then she extracts the relevant information from it and stores it in the relevant DB.
+     * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
+     * @return Success status if everything went well and error + failure otherwise
+     */
     public HttpStatus extractInfoFromCovidByAreaDB(RestTemplate restTemplate ) {
         try{
             log.info("---------- start CovidByAreaDB extraction----------");
@@ -171,6 +228,13 @@ public class DataService implements IDataService {
         return HttpStatus.OK;
     }
 
+    /**
+     * ---------------extractInfoFromHospitalizedDB---------------
+     * The function receives raw information from a GET requests,
+     * then she extracts the relevant information from it and stores it in the relevant DB.
+     * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
+     * @return Success status if everything went well and error + failure otherwise
+     */
     public HttpStatus extractInfoFromHospitalizedDB(RestTemplate restTemplate ) {
         try {
             log.info("---------- start HospitalizedDB extraction----------");
@@ -210,5 +274,10 @@ public class DataService implements IDataService {
             log.info(e.toString());
             throw e;
         }
+    }
+
+    @Bean
+    CommandLineRunner initDatabase() {
+        return args -> updateDbData();
     }
 }

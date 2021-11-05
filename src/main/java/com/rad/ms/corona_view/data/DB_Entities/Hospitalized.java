@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -38,56 +40,68 @@ public class Hospitalized {
 
     public Hospitalized(Map<String, Object> hospitalized) {
         this._id = (long) (Integer) hospitalized.get("_id");
-        this.date =  hospitalized.get("תאריך").toString();
-        this.total_hospitalized = hospitalized.get("מאושפזים").toString();
-        this.hospitalized_females_percent = hospitalized.get("אחוז נשים מאושפזות").toString();
-        this.hospitalized_avg_age =   hospitalized.get("גיל ממוצע מאושפזים").toString();
-        this.hospitalized_mean_age =  hospitalized.get("סטיית תקן גיל מאושפזים").toString();
-        this.respirators = hospitalized.get("מונשמים").toString();
-        this.respirators_females_percent =  hospitalized.get("אחוז נשים מונשמות").toString();
-        this.respirators_avg_age =  hospitalized.get("גיל ממוצע מונשמים").toString();
-        this.respirators_mean_age = hospitalized.get("סטיית תקן גיל מונשמים").toString();
-        this.mild_condition_Patients = hospitalized.get("חולים קל").toString();
-        this.mild_condition_females_percent = hospitalized.get("אחוז נשים חולות קל").toString();
-        this.mild_condition_avg_age = hospitalized.get("גיל ממוצע חולים קל").toString();
-        this.mild_condition_mean_age = hospitalized.get("סטיית תקן גיל חולים קל").toString();
-        this.moderate_condition_Patients =  hospitalized.get("חולים בינוני").toString();
-        this.moderate_condition_females_percent = hospitalized.get("אחוז נשים חולות בינוני").toString();
-        this.moderate_condition_avg_age =  hospitalized.get("גיל ממוצע חולים בינוני").toString();
-        this.moderate_condition_mean_age = hospitalized.get("סטיית תקן גיל חולים בינוני").toString();
-        this.severe_condition_Patients = hospitalized.get("חולים קשה").toString();
-        this.severe_condition_females_percent = hospitalized.get("אחוז נשים חולות קשה").toString();
-        this.severe_condition_avg_age = hospitalized.get("גיל ממוצע חולים קשה").toString();
-        this.severe_condition_mean_age = hospitalized.get("סטיית תקן גיל חולים קשה").toString();
-        this.severe_condition_Patients_counter = hospitalized.get("חולים קשה מצטבר").toString();
+        this.date =  dbHandler(hospitalized.get("תאריך").toString().substring(0, 10));
+        this.total_hospitalized = dbHandler(hospitalized.get("מאושפזים"));
+        this.hospitalized_females_percent =dbHandler(hospitalized.get("אחוז נשים מאושפזות"));
+        this.hospitalized_avg_age =  dbHandler( hospitalized.get("גיל ממוצע מאושפזים"));
+        this.hospitalized_mean_age =dbHandler(hospitalized.get("סטיית תקן גיל מאושפזים"));
+        this.respirators =dbHandler( hospitalized.get("מונשמים"));
+        this.respirators_females_percent =dbHandler(hospitalized.get("אחוז נשים מונשמות"));
+        this.respirators_avg_age = dbHandler(hospitalized.get("גיל ממוצע מונשמים"));
+        this.respirators_mean_age = dbHandler(hospitalized.get("סטיית תקן גיל מונשמים"));
+        this.mild_condition_Patients = dbHandler(hospitalized.get("חולים קל"));
+        this.mild_condition_females_percent =dbHandler(hospitalized.get("אחוז נשים חולות קל"));
+        this.mild_condition_avg_age = dbHandler(hospitalized.get("גיל ממוצע חולים קל"));
+        this.mild_condition_mean_age =dbHandler(hospitalized.get("סטיית תקן גיל חולים קל"));
+        this.moderate_condition_Patients = dbHandler(hospitalized.get("חולים בינוני"));
+        this.moderate_condition_females_percent =dbHandler(hospitalized.get("אחוז נשים חולות בינוני"));
+        this.moderate_condition_avg_age = dbHandler(hospitalized.get("גיל ממוצע חולים בינוני"));
+        this.moderate_condition_mean_age = dbHandler(hospitalized.get("סטיית תקן גיל חולים בינוני"));
+        this.severe_condition_Patients =dbHandler(hospitalized.get("חולים קשה"));
+        this.severe_condition_females_percent = dbHandler(hospitalized.get("אחוז נשים חולות קשה"));
+        this.severe_condition_avg_age = dbHandler(hospitalized.get("גיל ממוצע חולים קשה"));
+        this.severe_condition_mean_age =dbHandler(hospitalized.get("סטיית תקן גיל חולים קשה"));
+        this.severe_condition_Patients_counter = dbHandler(hospitalized.get("חולים קשה מצטבר"));
     }
 
+    public String dbHandler(Object x){
+        if (x ==null)
+            return "null";
+        else if (x instanceof Integer){
+          return x.toString();
+        }
+        else if (x instanceof Double){
+            return x.toString();
+        }
+        else
+            return (String)x;
+    }
     @Override
     public String toString() {
-        return "CovidByArea{" +
-                "_id=" + _id +
-                ", date='" + date + '\'' +
-                ", total_hospitalized='" + total_hospitalized + '\'' +
-                ", hospitalized_females_percent='" + hospitalized_females_percent + '\'' +
-                ", hospitalized_avg_age='" + hospitalized_avg_age + '\'' +
-                ", hospitalized_mean_age='" + hospitalized_mean_age + '\'' +
-                ", respirators='" + respirators + '\'' +
-                ", respirators_females_percent='" + respirators_females_percent + '\'' +
-                ", respirators_avg_age='" + respirators_avg_age + '\'' +
-                ", respirators_mean_age='" + respirators_mean_age + '\'' +
-                ", mild_condition_Patients='" + mild_condition_Patients + '\'' +
-                ", mild_condition_females_percent='" + mild_condition_females_percent + '\'' +
-                ", mild_condition_avg_age='" + mild_condition_avg_age + '\'' +
-                ", mild_condition_mean_age='" + mild_condition_mean_age + '\'' +
-                ", moderate_condition_Patients='" + moderate_condition_Patients + '\'' +
-                ", moderate_condition_females_percent='" + moderate_condition_females_percent + '\'' +
-                ", moderate_condition_avg_age='" + moderate_condition_avg_age + '\'' +
-                ", moderate_condition_mean_age='" + moderate_condition_mean_age + '\'' +
-                ", severe_condition_Patients='" + severe_condition_Patients + '\'' +
-                ", severe_condition_females_percent='" + severe_condition_females_percent + '\'' +
-                ", severe_condition_avg_age='" + severe_condition_avg_age + '\'' +
-                ", severe_condition_avg_age='" + severe_condition_mean_age + '\'' +
-                ", severe_condition_avg_age='" + severe_condition_Patients_counter + '\'' +
+        return "hospitalized{" +'\n' +
+                "_id=" + _id +'\n' +
+                ", date='" + date + '\n' +
+                ", total_hospitalized='" + total_hospitalized + '\n' +
+                ", hospitalized_females_percent='" + hospitalized_females_percent + '\n' +
+                ", hospitalized_avg_age='" + hospitalized_avg_age + '\n' +
+                ", hospitalized_mean_age='" + hospitalized_mean_age + '\n' +
+                ", respirators='" + respirators + '\n' +
+                ", respirators_females_percent='" + respirators_females_percent + '\n' +
+                ", respirators_avg_age='" + respirators_avg_age + '\n' +
+                ", respirators_mean_age='" + respirators_mean_age + '\n' +
+                ", mild_condition_Patients='" + mild_condition_Patients + '\n' +
+                ", mild_condition_females_percent='" + mild_condition_females_percent + '\n' +
+                ", mild_condition_avg_age='" + mild_condition_avg_age + '\n' +
+                ", mild_condition_mean_age='" + mild_condition_mean_age + '\n' +
+                ", moderate_condition_Patients='" + moderate_condition_Patients + '\n' +
+                ", moderate_condition_females_percent='" + moderate_condition_females_percent + '\n' +
+                ", moderate_condition_avg_age='" + moderate_condition_avg_age + '\n' +
+                ", moderate_condition_mean_age='" + moderate_condition_mean_age + '\n' +
+                ", severe_condition_Patients='" + severe_condition_Patients + '\n' +
+                ", severe_condition_females_percent='" + severe_condition_females_percent + '\n' +
+                ", severe_condition_avg_age='" + severe_condition_avg_age + '\n' +
+                ", severe_condition_avg_age='" + severe_condition_mean_age + '\n' +
+                ", severe_condition_avg_age='" + severe_condition_Patients_counter + '\n' +
                 '}';
     }
 

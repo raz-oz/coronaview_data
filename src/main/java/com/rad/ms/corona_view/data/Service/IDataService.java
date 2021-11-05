@@ -6,18 +6,18 @@ import com.rad.ms.corona_view.data.DB_Entities.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IDataService {
 
-    List<Hospitalized> getHospitalized();
+    Hospitalized getHospitalized(String date);
 
-    List<Isolations> getIsolationsByDate();
+    Isolations getIsolationsByDate(String date);
 
-    List<CovidByArea> getCovidByArea();
+    List<CovidByArea> getCovidByArea_town_code(String town_code);
+    CovidByArea getCovidByArea_id(long id);
 
-    List<Recovered> getRecoveredByDate();
     Recovered getRecoveredByID(long ID);
-    List<Recovered> getRecoveredByFirstName();
 
     HttpStatus updateDbData();
 
@@ -25,4 +25,5 @@ public interface IDataService {
     HttpStatus updateDbDataFromIsolationsDB();
     HttpStatus updateDbDataFromCovidByAreaDB();
     HttpStatus updateDbDataFromHospitalizedDB();
+
 }

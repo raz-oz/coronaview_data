@@ -8,7 +8,7 @@ import java.util.Map;
 public class CovidByArea {
     @Id
     private long _id;
-    private String town_code;
+    private String townCode;
     private String agas_code;
     private String town;
     private String date;
@@ -34,7 +34,7 @@ public class CovidByArea {
 
     public CovidByArea(Map<String, Object> covid_ByArea) {
         this._id = (long) (int) covid_ByArea.get("_id");
-        this.town_code = (String)covid_ByArea.get("town_code");
+        this.townCode = (String)covid_ByArea.get("town_code");
         this.agas_code = (String)covid_ByArea.get("agas_code");
         this.town = (String)covid_ByArea.get("town");
         this.date = (String)covid_ByArea.get("date");
@@ -60,7 +60,7 @@ public class CovidByArea {
     public String toString() {
         return "CovidByArea{" +
                 "_id=" + _id +
-                ", town_code='" + town_code + '\'' +
+                ", town_code='" + townCode + '\'' +
                 ", agas_code='" + agas_code + '\'' +
                 ", town='" + town + '\'' +
                 ", date='" + date + '\'' +
@@ -92,11 +92,11 @@ public class CovidByArea {
     }
 
     public String getTown_code() {
-        return town_code;
+        return townCode;
     }
 
     public void setTown_code(String town_code) {
-        this.town_code = town_code;
+        this.townCode = town_code;
     }
 
     public String getAgas_code() {
@@ -250,4 +250,6 @@ public class CovidByArea {
     public void setNew_vacc_third_dose_on_date(String new_vacc_third_dose_on_date) {
         this.new_vacc_third_dose_on_date = new_vacc_third_dose_on_date;
     }
+
+
 }

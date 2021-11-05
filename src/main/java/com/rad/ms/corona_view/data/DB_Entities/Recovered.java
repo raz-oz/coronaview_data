@@ -9,7 +9,7 @@ import java.util.Map;
 public class Recovered {
     @Id
     private long _id;
-    private String _days_between_pos_and_recovery;
+    private String DaysBetweenPosAndRecovery;
     private String _total_tests_count;
     private String _age_group;
     private String _gender;
@@ -21,7 +21,7 @@ public class Recovered {
 
     public Recovered(Map<String, Object> recovered) {
         this._id = (long)(int) recovered.get("_id");
-        this._days_between_pos_and_recovery = (String) recovered.get("days_between_pos_and_recovery");
+        this.DaysBetweenPosAndRecovery = (String) recovered.get("days_between_pos_and_recovery");
         this._total_tests_count = (String) recovered.get("total_tests_count");
         this._age_group = (String) recovered.get("age_group");
         this._gender = (String) recovered.get("gender");
@@ -32,7 +32,7 @@ public class Recovered {
     public String toString() {
         return "Recovered{" +
                 "_id=" + _id +
-                "days_between_pos_and_recovery=" + _days_between_pos_and_recovery + '\'' +
+                "days_between_pos_and_recovery=" + DaysBetweenPosAndRecovery + '\'' +
                 "total_tests_count=" + _total_tests_count + '\'' +
                 "age_group=" + _age_group + '\'' +
                 "gender=" + _gender + '\'' +
@@ -48,11 +48,11 @@ public class Recovered {
     }
 
     public String get_days_between_pos_and_recovery() {
-        return _days_between_pos_and_recovery;
+        return DaysBetweenPosAndRecovery;
     }
 
     public void set_days_between_pos_and_recovery(String _days_between_pos_and_recovery) {
-        this._days_between_pos_and_recovery = _days_between_pos_and_recovery;
+        this.DaysBetweenPosAndRecovery = _days_between_pos_and_recovery;
     }
 
     public String get_total_tests_count() {
