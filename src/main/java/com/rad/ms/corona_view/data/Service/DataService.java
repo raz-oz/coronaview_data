@@ -5,23 +5,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rad.ms.corona_view.data.DB_Entities.*;
-
+import com.rad.ms.corona_view.data.DB_Entities.CovidByAreaRepository;
+import com.rad.ms.corona_view.data.DB_Entities.HospitalizedRepository;
+import com.rad.ms.corona_view.data.DB_Entities.IsolationRepository;
+import com.rad.ms.corona_view.data.DB_Entities.RecoveredRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service

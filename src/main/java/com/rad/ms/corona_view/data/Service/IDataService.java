@@ -2,12 +2,13 @@ package com.rad.ms.corona_view.data.Service;
 
 
 
-import com.rad.ms.corona_view.data.DB_Entities.*;
+import com.rad.ms.corona_view.data.DB_Entities.Hospitalized;
+import com.rad.ms.corona_view.data.DB_Entities.CovidByArea;
+import com.rad.ms.corona_view.data.DB_Entities.Isolations;
+import com.rad.ms.corona_view.data.DB_Entities.Recovered;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IDataService {
     /**----------------Recovered-----------------*/

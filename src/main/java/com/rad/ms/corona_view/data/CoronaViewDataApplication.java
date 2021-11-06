@@ -1,15 +1,20 @@
 package com.rad.ms.corona_view.data;
 
-import java.net.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.boot.context.event.*;
-import org.springframework.context.*;
-import org.springframework.core.env.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.core.env.Environment;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 
 @SpringBootApplication
+@EnableEurekaClient
 public class CoronaViewDataApplication implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Autowired

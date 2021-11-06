@@ -2,13 +2,8 @@ package com.rad.ms.corona_view.data.DB_Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Hospitalized {

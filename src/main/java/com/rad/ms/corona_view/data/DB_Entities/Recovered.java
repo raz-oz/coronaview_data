@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.annotation.Id;
 
-import java.util.Map;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Recovered {
     @Id

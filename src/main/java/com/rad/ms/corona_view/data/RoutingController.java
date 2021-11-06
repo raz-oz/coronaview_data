@@ -1,13 +1,11 @@
 package com.rad.ms.corona_view.data;
 
 import com.rad.ms.corona_view.data.Service.IDataService;
-import com.rad.ms.corona_view.data.DB_Entities.Recovered;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RoutingController {
@@ -76,9 +74,9 @@ public class RoutingController {
     public String getCovidByArea_town_code(@PathVariable(value = "town_code") String code) {
         return accessService.getCovidByArea_town_code(code).toString();
     }
-    @GetMapping("/covidbyarea/id={id}")
-    public String getCovidByArea(@PathVariable(value = "id") String id) {
-        return accessService.getCovidByArea_id(id).toString();
+    @GetMapping("/covidbyarea/id={ID}")
+    public String getCovidByArea(@PathVariable(value = "ID") String ID) {
+        return accessService.getCovidByArea_id(ID).toString();
     }
     @GetMapping( "covidbyarea/updatedata")
     public HttpStatus updateDbDataFromCovidByAreaDB() {
