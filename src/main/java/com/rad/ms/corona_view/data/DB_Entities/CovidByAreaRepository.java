@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface CovidByAreaRepository extends MongoRepository<CovidByArea, String> {
-    CovidByArea findBy_id(long _id);
+    CovidByArea findBy_id(String _id);
     List<CovidByArea> findByTownCode(String townCode);
 }

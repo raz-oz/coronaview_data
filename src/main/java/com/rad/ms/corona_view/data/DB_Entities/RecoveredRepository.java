@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.List;
 
 public interface RecoveredRepository extends MongoRepository<Recovered, String> {
-    Recovered findBy_id(long _id);
+    Recovered findBy_id(String _id);
 
 }

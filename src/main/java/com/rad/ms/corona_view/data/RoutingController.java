@@ -1,8 +1,5 @@
 package com.rad.ms.corona_view.data;
 
-import com.rad.ms.corona_view.data.DB_Entities.CovidByArea;
-import com.rad.ms.corona_view.data.DB_Entities.Hospitalized;
-import com.rad.ms.corona_view.data.DB_Entities.Isolations;
 import com.rad.ms.corona_view.data.Service.IDataService;
 import com.rad.ms.corona_view.data.DB_Entities.Recovered;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-import java.util.Map;
-
 @RestController
 public class RoutingController {
 
@@ -22,34 +16,80 @@ public class RoutingController {
     private IDataService accessService;
 
     /**----------------Recovered-----------------*/
+
     @GetMapping("/recovered/{recovered_id}")
-    public Recovered get_RecoveredByID(@PathVariable(value = "recovered_id") String _id) {
-        return accessService.getRecoveredByID(Long.parseLong(_id));
+    public String get_RecoveredByID(@PathVariable(value = "recovered_id") String _id) {
+        return accessService.getRecoveredByID(_id).toString();
+    }
+    @GetMapping( "recovered/updatedata")
+    public HttpStatus updateDbDataFromRecoveredDB() {
+        return accessService.updateDbDataFromRecoveredDB();
+    }
+
+    @GetMapping("/recovered")
+    public  String getAllRecovered() {
+        return accessService.getAllRecovered().toString();
     }
 
     /**--------------Hospitalized---------------*/
-    @GetMapping("/hospitalized/{date}")
-    public Hospitalized getHospitalized(@PathVariable(value = "date") String date) {
-        return accessService.getHospitalized(date);
+
+    @GetMapping("/hospitalized/date={date}")
+    public String getHospitalized(@PathVariable(value = "date") String date) {
+        return accessService.getHospitalized(date).toString();
+    }
+    @GetMapping("/hospitalized/id={ID}")
+    public  String getHospitalizedByID(@PathVariable(value = "ID") String ID) {
+        return accessService.getHospitalizedByID(ID).toString();
+    }
+    @GetMapping( "hospitalized/updatedata")
+    public HttpStatus updateDbDataFromHospitalizedDB() {
+        return accessService.updateDbDataFromHospitalizedDB();
+    }
+
+    @GetMapping("/hospitalized")
+    public  String getAllHospitalized() {
+        return accessService.getAllHospitalized().toString();
     }
 
     /**---------------Isolations----------------*/
-    @GetMapping("/isolated/{date}")
-    public  Isolations getIsolationsByDate(@PathVariable(value = "date") String date) {
-        return accessService.getIsolationsByDate(date);
+
+    @GetMapping("/isolated/date={date}")
+    public  String getIsolationsByDate(@PathVariable(value = "date") String date) {
+        return accessService.getIsolationsByDate(date).toString();
+    }
+    @GetMapping("/isolated/id={ID}")
+    public String getIsolationsByID(@PathVariable(value = "ID") String ID) {
+        return accessService.getIsolationsByID(ID).toString();
+    }
+    @GetMapping( "isolated/updatedata")
+    public HttpStatus updateDbDataFromIsolationsDB() {
+        return accessService.updateDbDataFromIsolationsDB();
+    }
+    @GetMapping("/isolated")
+    public String getAllIsolations() {
+        return accessService.getAllIsolations().toString();
     }
 
-    /**------------------Area------------------*/
+    /**------------------Covid by area------------------*/
+
     @GetMapping("/covidbyarea/town_code={town_code}")
-    public List<CovidByArea> getCovidByArea_town_code(@PathVariable(value = "town_code") String code) {
-        return accessService.getCovidByArea_town_code(code);
+    public String getCovidByArea_town_code(@PathVariable(value = "town_code") String code) {
+        return accessService.getCovidByArea_town_code(code).toString();
     }
     @GetMapping("/covidbyarea/id={id}")
-    public  CovidByArea getCovidByArea(@PathVariable(value = "id") long id) {
-        return accessService.getCovidByArea_id(id);
+    public String getCovidByArea(@PathVariable(value = "id") String id) {
+        return accessService.getCovidByArea_id(id).toString();
+    }
+    @GetMapping( "covidbyarea/updatedata")
+    public HttpStatus updateDbDataFromCovidByAreaDB() {
+        return accessService.updateDbDataFromCovidByAreaDB();
     }
 
-    /**------------------updatedata------------------*/
+    @GetMapping("/covidbyarea")
+    public String getAllCovidbyarea() {
+        return accessService.getAllCovidbyarea().toString();
+    }
+    /**------------------update all data------------------*/
     @GetMapping( "/updatedata")
     public HttpStatus updateDb() {
         return accessService.updateDbData();

@@ -1,6 +1,9 @@
 package com.rad.ms.corona_view.data.Service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rad.ms.corona_view.data.DB_Entities.*;
 
 import org.slf4j.Logger;
@@ -11,6 +14,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -44,35 +48,45 @@ public class DataService implements IDataService {
 	}
 
 
+    /**------------------Covid by area function------------------*/
     @Override
-    public Hospitalized getHospitalized(String date) {
-        return hospitalizedRepository.findBydate(date);
-//        return null;
+    public List<CovidByArea> getCovidByArea_town_code(String town_code) {
+        return covidByAreaRepository.findByTownCode(town_code);
+
+    }
+    @Override
+    public CovidByArea getCovidByArea_id(String id) {
+        return covidByAreaRepository.findBy_id(id);
     }
 
+    /**---------------Isolations function----------------*/
     @Override
     public Isolations getIsolationsByDate(String date) {
         return isolationRepository.findBydate(date);
     }
-
     @Override
-    public List<CovidByArea> getCovidByArea_town_code(String town_code) {
-        return covidByAreaRepository.findByTownCode(town_code);
-//        return null;
-
+    public Isolations getIsolationsByID(String ID) {
+        return isolationRepository.findBy_id(ID);
     }
 
+    /**--------------Hospitalized function---------------*/
     @Override
-    public CovidByArea getCovidByArea_id(long id) {
-        return covidByAreaRepository.findBy_id(id);
+    public Hospitalized getHospitalized(String date) {
+        return hospitalizedRepository.findBydate(date);
+    }
+    @Override
+    public Hospitalized getHospitalizedByID(String ID) {
+        return hospitalizedRepository.findBy_id(ID);
     }
 
+    /**----------------Recovered function----------------*/
     @Override
-    public Recovered getRecoveredByID(long ID) {
+    public Recovered getRecoveredByID(String ID) {
         return recoveredRepository.findBy_id(ID);
     }
 
 
+    /**-----------------------update Db Data From x DB function--------------------------**/
     @Override
     public HttpStatus updateDbData() {
         try {
@@ -81,19 +95,6 @@ public class DataService implements IDataService {
             HttpStatus IsolationsDBStatus = extractInfoFromIsolationsDB(restTemplate);
             HttpStatus CovidByAreaDBStatus = extractInfoFromCovidByAreaDB(restTemplate);
             HttpStatus HospitalizedDBStatus = extractInfoFromHospitalizedDB(restTemplate);
-        }
-        catch(Exception e) {
-            log.info(e.toString());
-            return HttpStatus.NOT_FOUND;
-        }
-        return HttpStatus.OK;
-    }
-
-    @Override
-    public HttpStatus updateDbDataFromRecoveredDB() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            HttpStatus recoveredDBStatus = extractInfoFromRecoveredDB(restTemplate);
         }
         catch(Exception e) {
             log.info(e.toString());
@@ -142,6 +143,42 @@ public class DataService implements IDataService {
         return HttpStatus.OK;
     }
 
+    @Override
+    public HttpStatus updateDbDataFromRecoveredDB() {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpStatus recoveredDBStatus = extractInfoFromRecoveredDB(restTemplate);
+        }
+        catch(Exception e) {
+            log.info(e.toString());
+            return HttpStatus.NOT_FOUND;
+        }
+        return HttpStatus.OK;
+    }
+
+
+    /**-----------------------get All x function--------------------------**/
+    @Override
+    public List<Hospitalized> getAllHospitalized() {
+        return hospitalizedRepository.findAll();
+    }
+
+    @Override
+    public List<Recovered> getAllRecovered() {
+        return recoveredRepository.findAll();
+    }
+
+    @Override
+    public List<Isolations> getAllIsolations() {
+        return isolationRepository.findAll();
+    }
+
+    @Override
+    public List<CovidByArea> getAllCovidbyarea() {
+        return covidByAreaRepository.findAll();
+    }
+
+
     /**
      * ---------------extractInfoFromRecoveredDB---------------
      * The function receives raw information from a GET requests,
@@ -149,11 +186,11 @@ public class DataService implements IDataService {
      * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
      * @return Success status if everything went well and error + failure otherwise
      */
-    public HttpStatus extractInfoFromRecoveredDB(RestTemplate restTemplate) {
+    public HttpStatus extractInfoFromRecoveredDB(RestTemplate restTemplate) throws JsonProcessingException {
         try {
             log.info("---------- start RecoveredDB extraction----------");
             String recoveredURL = "https://data.gov.il/api/3/action/datastore_search?resource_id=8455d49f-ce32-4f8f-b1d4-1d764660cca3";
-            ArrayList<LinkedHashMap<String, Object>> records_map = extractInfoFromDBHelpFunc(restTemplate, recoveredURL);
+            JsonNode records_map = extractInfoFromDBHelpFunc(restTemplate, recoveredURL);
             ArrayList<Recovered> recovered_list = new ArrayList<>();
             records_map.forEach(r -> recovered_list.add(new Recovered(r)));
 
@@ -177,12 +214,12 @@ public class DataService implements IDataService {
      * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
      * @return Success status if everything went well and error + failure otherwise
      */
-    public HttpStatus extractInfoFromIsolationsDB(RestTemplate restTemplate ) {
+    public HttpStatus extractInfoFromIsolationsDB(RestTemplate restTemplate ) throws JsonProcessingException {
         try {
             log.info("---------- start IsolationsDB extraction----------");
 
             String insulationURL = "https://data.gov.il/api/3/action/datastore_search?resource_id=9eedd26c-019b-433a-b28b-efcc98de378d";
-            ArrayList<LinkedHashMap<String, Object>> records_map = extractInfoFromDBHelpFunc(restTemplate, insulationURL);
+            JsonNode records_map = extractInfoFromDBHelpFunc(restTemplate, insulationURL);
             ArrayList<Isolations> Isolations_list = new ArrayList<>();
             records_map.forEach(r -> Isolations_list.add(new Isolations(r)));
 
@@ -206,12 +243,12 @@ public class DataService implements IDataService {
      * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
      * @return Success status if everything went well and error + failure otherwise
      */
-    public HttpStatus extractInfoFromCovidByAreaDB(RestTemplate restTemplate ) {
+    public HttpStatus extractInfoFromCovidByAreaDB(RestTemplate restTemplate ) throws JsonProcessingException {
         try{
             log.info("---------- start CovidByAreaDB extraction----------");
 
             String covid19ByAreaURL = "https://data.gov.il/api/3/action/datastore_search?resource_id=d07c0771-01a8-43b2-96cc-c6154e7fa9bd";
-            ArrayList<LinkedHashMap<String, Object>> records_map = extractInfoFromDBHelpFunc(restTemplate, covid19ByAreaURL);
+            JsonNode records_map = extractInfoFromDBHelpFunc(restTemplate, covid19ByAreaURL);
             ArrayList<CovidByArea> covidByArea_list = new ArrayList<>();
             records_map.forEach(r -> covidByArea_list.add(new CovidByArea(r)));
 
@@ -235,12 +272,12 @@ public class DataService implements IDataService {
      * @param restTemplate - Auxiliary variable of the platform which executes the request for us.
      * @return Success status if everything went well and error + failure otherwise
      */
-    public HttpStatus extractInfoFromHospitalizedDB(RestTemplate restTemplate ) {
+    public HttpStatus extractInfoFromHospitalizedDB(RestTemplate restTemplate ) throws JsonProcessingException {
         try {
             log.info("---------- start HospitalizedDB extraction----------");
 
             String hospitalizedURL = "https://data.gov.il/api/3/action/datastore_search?resource_id=e4bf0ab8-ec88-4f9b-8669-f2cc78273edd";
-            ArrayList<LinkedHashMap<String, Object>> records_map = extractInfoFromDBHelpFunc(restTemplate, hospitalizedURL);
+            JsonNode records_map = extractInfoFromDBHelpFunc(restTemplate, hospitalizedURL);
             ArrayList<Hospitalized> hospitalized_list = new ArrayList<>();
             records_map.forEach(r ->hospitalized_list.add(new Hospitalized(r)));
 
@@ -263,18 +300,20 @@ public class DataService implements IDataService {
      * @param URL - The GET request of the API we are working with
      * @return The information of the current database without any information surrounding it
      */
-    public ArrayList<LinkedHashMap<String, Object>> extractInfoFromDBHelpFunc(RestTemplate restTemplate, String URL){
+    public JsonNode extractInfoFromDBHelpFunc(RestTemplate restTemplate, String URL) throws JsonProcessingException {
         try {
-            Map<?, ?> AllInfo_map = restTemplate.getForObject(URL, Map.class);
-            assert AllInfo_map != null;
-            LinkedHashMap<String, Object> result_map = (LinkedHashMap<String, Object>) AllInfo_map.get("result");
-            return (ArrayList<LinkedHashMap<String, Object>>) result_map.get("records");
+            ResponseEntity<String> response = restTemplate.getForEntity(URL, String.class);
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(response.getBody());
+            JsonNode result = root.path("result");
+            return result.path("records");
         }
         catch(Exception e) {
             log.info(e.toString());
             throw e;
         }
     }
+
 
     @Bean
     CommandLineRunner initDatabase() {

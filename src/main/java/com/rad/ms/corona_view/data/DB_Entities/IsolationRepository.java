@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.List;
 
 public interface IsolationRepository extends MongoRepository<Isolations, String> {
-    Isolations findBy_id(long _id);
+    Isolations findBy_id(String _id);
      Isolations findBydate(String date);
 }

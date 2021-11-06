@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.List;
 
 public interface HospitalizedRepository extends MongoRepository<Hospitalized, String> {
-    Hospitalized findBy_id(long _id);
+    Hospitalized findBy_id(String _id);
     Hospitalized findBydate(String date);
 
 
