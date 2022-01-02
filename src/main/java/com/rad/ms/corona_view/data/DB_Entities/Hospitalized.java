@@ -3,9 +3,11 @@ package com.rad.ms.corona_view.data.DB_Entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document
 public class Hospitalized {
     @Id
     private String _id;
@@ -102,5 +104,95 @@ public class Hospitalized {
                 '}';
     }
 
+    public String get_id() {
+        return _id;
+    }
 
+    public String getDate() {
+        return date;
+    }
+
+    public String getTotal_hospitalized() {
+        return total_hospitalized;
+    }
+
+    public String getHospitalized_females_percent() {
+        return hospitalized_females_percent;
+    }
+
+    public String getHospitalized_avg_age() {
+        return hospitalized_avg_age;
+    }
+
+    public String getHospitalized_mean_age() {
+        return hospitalized_mean_age;
+    }
+
+    public String getRespirators() {
+        return respirators;
+    }
+
+    public String getRespirators_females_percent() {
+        return respirators_females_percent;
+    }
+
+    public String getRespirators_avg_age() {
+        return respirators_avg_age;
+    }
+
+    public String getRespirators_mean_age() {
+        return respirators_mean_age;
+    }
+
+    public String getMild_condition_Patients() {
+        return mild_condition_Patients;
+    }
+
+    public String getMild_condition_females_percent() {
+        return mild_condition_females_percent;
+    }
+
+    public String getMild_condition_avg_age() {
+        return mild_condition_avg_age;
+    }
+
+    public String getMild_condition_mean_age() {
+        return mild_condition_mean_age;
+    }
+
+    public String getModerate_condition_Patients() {
+        return moderate_condition_Patients;
+    }
+
+    public String getModerate_condition_females_percent() {
+        return moderate_condition_females_percent;
+    }
+
+    public String getModerate_condition_avg_age() {
+        return moderate_condition_avg_age;
+    }
+
+    public String getModerate_condition_mean_age() {
+        return moderate_condition_mean_age;
+    }
+
+    public String getSevere_condition_Patients() {
+        return severe_condition_Patients;
+    }
+
+    public String getSevere_condition_females_percent() {
+        return severe_condition_females_percent;
+    }
+
+    public String getSevere_condition_avg_age() {
+        return severe_condition_avg_age;
+    }
+
+    public String getSevere_condition_mean_age() {
+        return severe_condition_mean_age;
+    }
+
+    public String getSevere_condition_Patients_counter() {
+        return severe_condition_Patients_counter;
+    }
 }

@@ -91,7 +91,7 @@ public class DataService implements IDataService {
     public HttpStatus updateDbData() {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            HttpStatus recoveredDBStatus = extractInfoFromRecoveredDB(restTemplate);
+            // HttpStatus recoveredDBStatus = extractInfoFromRecoveredDB(restTemplate);
             HttpStatus IsolationsDBStatus = extractInfoFromIsolationsDB(restTemplate);
             HttpStatus CovidByAreaDBStatus = extractInfoFromCovidByAreaDB(restTemplate);
             HttpStatus HospitalizedDBStatus = extractInfoFromHospitalizedDB(restTemplate);
@@ -226,7 +226,7 @@ public class DataService implements IDataService {
             isolationRepository.deleteAll();
 
             log.info("---------- Saving IsolationsDB records ----------");
-
+            System.out.println("HEYYYYYYY");
             isolationRepository.saveAll(Isolations_list);// save all isolations records
         }
         catch(Exception e) {

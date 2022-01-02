@@ -3,8 +3,10 @@ package com.rad.ms.corona_view.data.DB_Entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document
 public class Recovered {
     @Id
     private String _id;
@@ -36,5 +38,29 @@ public class Recovered {
                 "age_group=" + _age_group + '\'' +
                 "gender=" + _gender + '\'' +
                 "test_indication=" + _test_indication;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public String getDaysBetweenPosAndRecovery() {
+        return DaysBetweenPosAndRecovery;
+    }
+
+    public String get_total_tests_count() {
+        return _total_tests_count;
+    }
+
+    public String get_age_group() {
+        return _age_group;
+    }
+
+    public String get_gender() {
+        return _gender;
+    }
+
+    public String get_test_indication() {
+        return _test_indication;
     }
 }

@@ -2,8 +2,10 @@ package com.rad.ms.corona_view.data.DB_Entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document
 public class CovidByArea {
     @Id
     private String _id;
@@ -53,6 +55,90 @@ public class CovidByArea {
         this.new_vacc_second_dose_on_date = covid_ByArea.get("new_vacc_second_dose_on_date").asText();
         this.accumulated_vaccination_third_dose = covid_ByArea.get("accumulated_vaccination_third_dose").asText();
         this.new_vacc_third_dose_on_date = covid_ByArea.get("new_vacc_third_dose_on_date").asText();
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public String getTownCode() {
+        return townCode;
+    }
+
+    public String getAgas_code() {
+        return agas_code;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getAccumulated_cases() {
+        return accumulated_cases;
+    }
+
+    public String getNew_cases_on_date() {
+        return new_cases_on_date;
+    }
+
+    public String getAccumulated_recoveries() {
+        return accumulated_recoveries;
+    }
+
+    public String getNew_recoveries_on_date() {
+        return new_recoveries_on_date;
+    }
+
+    public String getAccumulated_hospitalized() {
+        return accumulated_hospitalized;
+    }
+
+    public String getNew_hospitalized_on_date() {
+        return new_hospitalized_on_date;
+    }
+
+    public String getAccumulated_deaths() {
+        return accumulated_deaths;
+    }
+
+    public String getNew_deaths_on_date() {
+        return new_deaths_on_date;
+    }
+
+    public String getAccumulated_diagnostic_tests() {
+        return accumulated_diagnostic_tests;
+    }
+
+    public String getNew_diagnostic_tests_on_date() {
+        return new_diagnostic_tests_on_date;
+    }
+
+    public String getAccumulated_vaccination_first_dose() {
+        return accumulated_vaccination_first_dose;
+    }
+
+    public String getNew_vacc_first_dose_on_date() {
+        return new_vacc_first_dose_on_date;
+    }
+
+    public String getAccumulated_vaccination_second_dose() {
+        return accumulated_vaccination_second_dose;
+    }
+
+    public String getNew_vacc_second_dose_on_date() {
+        return new_vacc_second_dose_on_date;
+    }
+
+    public String getAccumulated_vaccination_third_dose() {
+        return accumulated_vaccination_third_dose;
+    }
+
+    public String getNew_vacc_third_dose_on_date() {
+        return new_vacc_third_dose_on_date;
     }
 
     @Override
